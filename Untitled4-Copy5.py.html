@@ -1,0 +1,1246 @@
+
+# coding: utf-8
+
+# In[10]:
+
+
+import plotly
+import plotly.graph_objs as go
+from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
+init_notebook_mode(connected=True)
+import numpy as np
+coef=.3
+coef=65.39759826660156
+min_coef = 47.99530029296875
+
+
+# # graph1
+
+# In[41]:
+
+
+trace0 = go.Scatter(
+    y=[5] * 1000,
+     marker=dict(
+            size=16,
+            cmax=1000,
+            cmin=0,
+            color=np.arange(0,1000,100),
+            colorbar=dict(
+                title='Timestamp Colorscale'
+            ),
+            colorscale= [
+                # Let first 10% (0.1) of the values have color rgb(0, 0, 0)
+                [0, 'rgb(0, 0, 1000)'],
+                [0.1, 'rgb(0, 50, 950)'],
+
+                # Let values between 10-20% of the min and max of z
+                # have color rgb(20, 20, 20)
+                [0.1, 'rgb(0, 100, 900)'],
+                [0.2, 'rgb(0, 150, 850)'],
+
+                # Values between 20-30% of the min and max of z
+                # have color rgb(40, 40, 40)
+                [0.2, 'rgb(0, 200, 800)'],
+                [0.3, 'rgb(0, 250, 750)'],
+
+                [0.3, 'rgb(0, 300, 700)'],
+                [0.4, 'rgb(0, 350, 650)'],
+
+                [0.4, 'rgb(0, 400, 600)'],
+                [0.5, 'rgb(0, 450, 550)'],
+
+                [0.5, 'rgb(0, 500, 500)'],
+                [0.6, 'rgb(0, 550, 450)'],
+
+                [0.6, 'rgb(0, 650, 400)'],
+                [0.7, 'rgb(0, 700, 350)'],
+
+                [0.7, 'rgb(0, 750, 300)'],
+                [0.8, 'rgb(0, 800, 250)'],
+
+                [0.8, 'rgb(0, 850, 200)'],
+                [0.9, 'rgb(0, 900, 150)'],
+
+                [0.9, 'rgb(0, 950, 100)'],
+                [1.0, 'rgb(0, 1000, 50)']
+            ]
+        ),
+    mode='markers'
+)
+traceon = [trace0]
+
+layout= {
+    'title': 'Dew',
+    'xaxis': {
+        'range': [0, 4],
+        'showgrid' : False,
+        'zeroline' : False,
+        'showline' : False,
+        'ticks' : False,
+        'showticklabels' : False
+    },
+    'yaxis': {
+        'range': [0, 4],
+        'showgrid' : False,
+        'zeroline' : False,
+        'showline' : False,
+        'ticks' : False,
+        'showticklabels' : False
+    },
+    'width': 800,
+    'height': 800,
+    'shapes': staticcircles
+}
+
+coef=.3
+coef=65.39759826660156
+min_coef = 47.99530029296875
+
+layout['sliders'] = sliders1
+
+#layout['updatemenus'] = updatemenus
+
+fig = dict( data=traceon, layout=layout )
+iplot( fig, filename='circle-color' )
+
+#fig = go.Figure( data=traceon )
+#iplot(fig)
+
+
+# # sliders1
+
+# In[59]:
+
+
+sliders1 = []
+sliders1.append(
+    dict(
+        active = 0,
+        #currentvalue = {"prefix": "Frequency: "},
+        pad = {"t": 50},
+        steps = [{
+            'method':'relayout', 
+            'label':'timestamp1-' + str(i),
+            'args':[
+                'shapes', [
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0,{256 * i.dew_1}, {coef*(1000-i.dew_1)}, 1)',
+                        'x0': 1.5,
+                        'y0': 2.0,
+                        'x1': 3.0,
+                        'y1': 3.5,
+                        'line': {
+                            'color': f'rgba(0,{256 * i.dew_1}, {coef*(1000-i.dew_1)}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0,{256 * i.dew_3}, {coef*(1000-i.dew_3)}, 1)',
+                        'x0': 1.75,
+                        'y0': 0,
+                        'x1': 3.0,
+                        'y1': 1.15,
+                        'line': {
+                            'color': f'rgba(0,{256 * i.dew_3}, {coef*(1000-i.dew_3)}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0,{256 * i.dew_2}, {coef*(1000-i.dew_2)}, 1)',
+                        'x0': 1.0,
+                        'y0': .625,
+                        'x1': 3,
+                        'y1': 2.625,
+                        'line': {
+                            'color': f'rgba(0,{256 * i.dew_2}, {coef*(1000-i.dew_2)}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people_x'],
+                        'y0': i['people_y'],
+                        'x1': i['people_x1'],
+                        'y1': i['people_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                                        {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people1_x'],
+                        'y0': i['people1_y'],
+                        'x1': i['people1_x1'],
+                        'y1': i['people1_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people2_x'],
+                        'y0': i['people2_y'],
+                        'x1': i['people2_x1'],
+                        'y1': i['people2_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people3_x'],
+                        'y0': i['people3_y'],
+                        'x1': i['people3_x1'],
+                        'y1': i['people3_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people4_x'],
+                        'y0': i['people4_y'],
+                        'x1': i['people4_x1'],
+                        'y1': i['people4_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                ]
+            ]
+        } for ndx, i in scale_dew[['dew_1',"dew_2","dew_3",'people_x',"people1_x","people2_x","people3_x","people4_x",'people_y',"people1_y","people2_y","people3_y","people4_y",'people_x1',"people1_x1","people2_x1","people3_x1","people4_x1",'people_y1',"people1_y1","people2_y1","people3_y1","people4_y1",]][27500:28000].iterrows()]
+    )
+)
+
+
+# # graph2
+
+# In[68]:
+
+
+trace0 = go.Scatter(
+    y=[5] * 1000,
+     marker=dict(
+            size=16,
+            cmax=1000,
+            cmin=0,
+            color=np.arange(0,1000,100),
+            colorbar=dict(
+                title='Timestamp Colorscale'
+            ),
+            colorscale= [
+                # Let first 10% (0.1) of the values have color rgb(0, 0, 0)
+                [0, 'rgb(0, 0, 1000)'],
+                [0.1, 'rgb(0, 50, 950)'],
+
+                # Let values between 10-20% of the min and max of z
+                # have color rgb(20, 20, 20)
+                [0.1, 'rgb(0, 100, 900)'],
+                [0.2, 'rgb(0, 150, 850)'],
+
+                # Values between 20-30% of the min and max of z
+                # have color rgb(40, 40, 40)
+                [0.2, 'rgb(0, 200, 800)'],
+                [0.3, 'rgb(0, 250, 750)'],
+
+                [0.3, 'rgb(0, 300, 700)'],
+                [0.4, 'rgb(0, 350, 650)'],
+
+                [0.4, 'rgb(0, 400, 600)'],
+                [0.5, 'rgb(0, 450, 550)'],
+
+                [0.5, 'rgb(0, 500, 500)'],
+                [0.6, 'rgb(0, 550, 450)'],
+
+                [0.6, 'rgb(0, 650, 400)'],
+                [0.7, 'rgb(0, 700, 350)'],
+
+                [0.7, 'rgb(0, 750, 300)'],
+                [0.8, 'rgb(0, 800, 250)'],
+
+                [0.8, 'rgb(0, 850, 200)'],
+                [0.9, 'rgb(0, 900, 150)'],
+
+                [0.9, 'rgb(0, 950, 100)'],
+                [1.0, 'rgb(0, 1000, 50)']
+            ]
+        ),
+    mode='markers'
+)
+traceon = [trace0]
+
+layout= {
+    'title': 'CO2',
+    'xaxis': {
+        'range': [0, 4],
+        'showgrid' : False,
+        'zeroline' : False,
+        'showline' : False,
+        'ticks' : False,
+        'showticklabels' : False
+    },
+    'yaxis': {
+        'range': [0, 4],
+        'showgrid' : False,
+        'zeroline' : False,
+        'showline' : False,
+        'ticks' : False,
+        'showticklabels' : False
+    },
+    'width': 800,
+    'height': 800,
+    'shapes': staticcircles
+}
+
+coef=.3
+coef=65.39759826660156
+min_coef = 47.99530029296875
+
+layout['sliders'] = sliders2
+
+#layout['updatemenus'] = updatemenus
+
+fig = dict( data=traceon, layout=layout )
+iplot( fig, filename='circle-color' )
+
+#fig = go.Figure( data=traceon )
+#iplot(fig)
+
+
+# # sliders2 co2
+
+# In[67]:
+
+
+sliders2 = []
+sliders2.append(
+    dict(
+        active = 0,
+        #currentvalue = {"prefix": "Frequency: "},
+        pad = {"t": 50},
+        steps = [{
+            'method':'relayout', 
+            'label':'timestamp2-' + str(i),
+            'args':[
+                'shapes', [
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0,{256 * i.co2_1}, {coef*(1000-i.co2_1)}, 1)',
+                        'x0': 1.5,
+                        'y0': 2.0,
+                        'x1': 3.0,
+                        'y1': 3.5,
+                        'line': {
+                            'color': f'rgba(0,{256 * i.co2_1}, {coef*(1000-i.co2_1)}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0,{256 * i.co2_2}, {coef*(1000-i.co2_2)}, 1)',
+                        'x0': 1.75,
+                        'y0': 0,
+                        'x1': 3.0,
+                        'y1': 1.15,
+                        'line': {
+                            'color': f'rgba(0,{256 * i.co2_2}, {coef*(1000-i.co2_2)}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0,{256 * i.co2_3}, {coef*(1000-i.co2_3)}, 1)',
+                        'x0': 1.0,
+                        'y0': .625,
+                        'x1': 3,
+                        'y1': 2.625,
+                        'line': {
+                            'color': f'rgba(0,{256 * i.co2_3}, {coef*(1000-i.co2_3)}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people_x'],
+                        'y0': i['people_y'],
+                        'x1': i['people_x1'],
+                        'y1': i['people_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                                        {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people1_x'],
+                        'y0': i['people1_y'],
+                        'x1': i['people1_x1'],
+                        'y1': i['people1_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people2_x'],
+                        'y0': i['people2_y'],
+                        'x1': i['people2_x1'],
+                        'y1': i['people2_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people3_x'],
+                        'y0': i['people3_y'],
+                        'x1': i['people3_x1'],
+                        'y1': i['people3_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people4_x'],
+                        'y0': i['people4_y'],
+                        'x1': i['people4_x1'],
+                        'y1': i['people4_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                ]
+            ]
+        } for ndx, i in scale_dew[['co2_1',"co2_2","co2_3",'people_x',"people1_x","people2_x","people3_x","people4_x",'people_y',"people1_y","people2_y","people3_y","people4_y",'people_x1',"people1_x1","people2_x1","people3_x1","people4_x1",'people_y1',"people1_y1","people2_y1","people3_y1","people4_y1",]][27500:28000].iterrows()]
+    )
+)
+
+
+# # graph3
+
+# In[66]:
+
+
+trace0 = go.Scatter(
+    y=[5] * 1000,
+     marker=dict(
+            size=16,
+            cmax=1000,
+            cmin=0,
+            color=np.arange(0,1000,100),
+            colorbar=dict(
+                title='Timestamp Colorscale'
+            ),
+            colorscale= [
+                # Let first 10% (0.1) of the values have color rgb(0, 0, 0)
+                [0, 'rgb(0, 0, 1000)'],
+                [0.1, 'rgb(0, 50, 950)'],
+
+                # Let values between 10-20% of the min and max of z
+                # have color rgb(20, 20, 20)
+                [0.1, 'rgb(0, 100, 900)'],
+                [0.2, 'rgb(0, 150, 850)'],
+
+                # Values between 20-30% of the min and max of z
+                # have color rgb(40, 40, 40)
+                [0.2, 'rgb(0, 200, 800)'],
+                [0.3, 'rgb(0, 250, 750)'],
+
+                [0.3, 'rgb(0, 300, 700)'],
+                [0.4, 'rgb(0, 350, 650)'],
+
+                [0.4, 'rgb(0, 400, 600)'],
+                [0.5, 'rgb(0, 450, 550)'],
+
+                [0.5, 'rgb(0, 500, 500)'],
+                [0.6, 'rgb(0, 550, 450)'],
+
+                [0.6, 'rgb(0, 650, 400)'],
+                [0.7, 'rgb(0, 700, 350)'],
+
+                [0.7, 'rgb(0, 750, 300)'],
+                [0.8, 'rgb(0, 800, 250)'],
+
+                [0.8, 'rgb(0, 850, 200)'],
+                [0.9, 'rgb(0, 900, 150)'],
+
+                [0.9, 'rgb(0, 950, 100)'],
+                [1.0, 'rgb(0, 1000, 50)']
+            ]
+        ),
+    mode='markers'
+)
+traceon = [trace0]
+
+layout= {
+    'title': 'Relative Humidity',
+    'xaxis': {
+        'range': [0, 4],
+        'showgrid' : False,
+        'zeroline' : False,
+        'showline' : False,
+        'ticks' : False,
+        'showticklabels' : False
+    },
+    'yaxis': {
+        'range': [0, 4],
+        'showgrid' : False,
+        'zeroline' : False,
+        'showline' : False,
+        'ticks' : False,
+        'showticklabels' : False
+    },
+    'width': 800,
+    'height': 800,
+    'shapes': staticcircles
+}
+
+coef=.3
+coef=65.39759826660156
+min_coef = 47.99530029296875
+
+layout['sliders'] = sliders3
+
+#layout['updatemenus'] = updatemenus
+
+fig = dict( data=traceon, layout=layout )
+iplot( fig, filename='circle-color' )
+
+#fig = go.Figure( data=traceon )
+#iplot(fig)
+
+
+# # sliders3 relh
+
+# In[65]:
+
+
+sliders3 = []
+sliders3.append(
+    dict(
+        active = 0,
+#       # currentvalue = {"prefix": "Frequency: "},
+        pad = {"t": 50},
+        steps = [{
+            'method':'relayout', 
+            'label':'timestamp',
+            'args':[
+                'shapes', [
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0,{256 * i.relH_1}, {coef*(1000-i.relH_1)}, 1)',
+                        'x0': 1.5,
+                        'y0': 2.0,
+                        'x1': 3.0,
+                        'y1': 3.5,
+                        'line': {
+                            'color': f'rgba(0,{256 * i.relH_1}, {coef*(1000-i.relH_1)}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0,{256 * i.relH_2}, {coef*(1000-i.relH_2)}, 1)',
+                        'x0': 1.75,
+                        'y0': 0,
+                        'x1': 3.0,
+                        'y1': 1.15,
+                        'line': {
+                            'color': f'rgba(0,{256 * i.relH_2}, {coef*(1000-i.relH_2)}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0,{256 * i.relH_3}, {coef*(1000-i.relH_3)}, 1)',
+                        'x0': 1.0,
+                        'y0': .625,
+                        'x1': 3,
+                        'y1': 2.625,
+                        'line': {
+                            'color': f'rgba(0,{256 * i.relH_3}, {coef*(1000-i.relH_3)}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people_x'],
+                        'y0': i['people_y'],
+                        'x1': i['people_x1'],
+                        'y1': i['people_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                                        {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people1_x'],
+                        'y0': i['people1_y'],
+                        'x1': i['people1_x1'],
+                        'y1': i['people1_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people2_x'],
+                        'y0': i['people2_y'],
+                        'x1': i['people2_x1'],
+                        'y1': i['people2_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people3_x'],
+                        'y0': i['people3_y'],
+                        'x1': i['people3_x1'],
+                        'y1': i['people3_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people4_x'],
+                        'y0': i['people4_y'],
+                        'x1': i['people4_x1'],
+                        'y1': i['people4_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                ]
+            ]
+        } for ndx, i in scale_dew[['relH_1',"relH_2","relH_3",'people_x',"people1_x","people2_x","people3_x","people4_x",'people_y',"people1_y","people2_y","people3_y","people4_y",'people_x1',"people1_x1","people2_x1","people3_x1","people4_x1",'people_y1',"people1_y1","people2_y1","people3_y1","people4_y1",]][27500:28000].iterrows()]
+    )
+)
+
+
+# # sliders4 temp
+
+# In[63]:
+
+
+sliders4 = []
+sliders4.append(
+    dict(
+        active = 0,
+        #currentvalue = {"prefix": "Frequency: "},
+        pad = {"t": 50},
+        steps = [{
+            'method':'relayout', 
+            'label':'timestamp',
+            'args':[
+                'shapes', [
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0,{256 * i.temp_1}, {coef*(1000-i.temp_1)}, 1)',
+                        'x0': 1.5,
+                        'y0': 2.0,
+                        'x1': 3.0,
+                        'y1': 3.5,
+                        'line': {
+                            'color': f'rgba(0,{256 * i.temp_1}, {coef*(1000-i.temp_1)}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0,{256 * i.temp_2}, {coef*(1000-i.temp_2)}, 1)',
+                        'x0': 1.75,
+                        'y0': 0,
+                        'x1': 3.0,
+                        'y1': 1.15,
+                        'line': {
+                            'color': f'rgba(0,{256 * i.temp_2}, {coef*(1000-i.temp_2)}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0,{256 * i.temp_3}, {coef*(1000-i.temp_3)}, 1)',
+                        'x0': 1.0,
+                        'y0': .625,
+                        'x1': 3,
+                        'y1': 2.625,
+                        'line': {
+                            'color': f'rgba(0,{256 * i.temp_3}, {coef*(1000-i.temp_3)}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people_x'],
+                        'y0': i['people_y'],
+                        'x1': i['people_x1'],
+                        'y1': i['people_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                                        {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people1_x'],
+                        'y0': i['people1_y'],
+                        'x1': i['people1_x1'],
+                        'y1': i['people1_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people2_x'],
+                        'y0': i['people2_y'],
+                        'x1': i['people2_x1'],
+                        'y1': i['people2_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people3_x'],
+                        'y0': i['people3_y'],
+                        'x1': i['people3_x1'],
+                        'y1': i['people3_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': i['people4_x'],
+                        'y0': i['people4_y'],
+                        'x1': i['people4_x1'],
+                        'y1': i['people4_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                ]
+            ]
+        } for ndx, i in scale_dew[['temp_1',"temp_2","temp_3",'people_x',"people1_x","people2_x","people3_x","people4_x",'people_y',"people1_y","people2_y","people3_y","people4_y",'people_x1',"people1_x1","people2_x1","people3_x1","people4_x1",'people_y1',"people1_y1","people2_y1","people3_y1","people4_y1",]][27500:28000].iterrows()]
+    )
+)
+
+
+# # graph4
+
+# In[64]:
+
+
+trace0 = go.Scatter(
+    y=[5] * 1000,
+     marker=dict(
+            size=16,
+            cmax=1000,
+            cmin=0,
+            color=np.arange(0,1000,100),
+            colorbar=dict(
+                title='Timestamp Colorscale'
+            ),
+            colorscale= [
+                # Let first 10% (0.1) of the values have color rgb(0, 0, 0)
+                [0, 'rgb(0, 0, 1000)'],
+                [0.1, 'rgb(0, 50, 950)'],
+
+                # Let values between 10-20% of the min and max of z
+                # have color rgb(20, 20, 20)
+                [0.1, 'rgb(0, 100, 900)'],
+                [0.2, 'rgb(0, 150, 850)'],
+
+                # Values between 20-30% of the min and max of z
+                # have color rgb(40, 40, 40)
+                [0.2, 'rgb(0, 200, 800)'],
+                [0.3, 'rgb(0, 250, 750)'],
+
+                [0.3, 'rgb(0, 300, 700)'],
+                [0.4, 'rgb(0, 350, 650)'],
+
+                [0.4, 'rgb(0, 400, 600)'],
+                [0.5, 'rgb(0, 450, 550)'],
+
+                [0.5, 'rgb(0, 500, 500)'],
+                [0.6, 'rgb(0, 550, 450)'],
+
+                [0.6, 'rgb(0, 650, 400)'],
+                [0.7, 'rgb(0, 700, 350)'],
+
+                [0.7, 'rgb(0, 750, 300)'],
+                [0.8, 'rgb(0, 800, 250)'],
+
+                [0.8, 'rgb(0, 850, 200)'],
+                [0.9, 'rgb(0, 900, 150)'],
+
+                [0.9, 'rgb(0, 950, 100)'],
+                [1.0, 'rgb(0, 1000, 50)']
+            ]
+        ),
+    mode='markers'
+)
+traceon = [trace0]
+
+layout= {
+        'title': 'Temperature',
+        'xaxis': {
+        'range': [0, 4],
+        'showgrid' : False,
+        'zeroline' : False,
+        'showline' : False,
+        'ticks' : False,
+        'showticklabels' : False
+    },
+    'yaxis': {
+        'range': [0, 4],
+        'showgrid' : False,
+        'zeroline' : False,
+        'showline' : False,
+        'ticks' : False,
+        'showticklabels' : False
+    },
+    'width': 800,
+    'height': 800,
+    'shapes': staticcircles
+}
+
+layout['sliders'] = sliders4
+
+#layout['updatemenus'] = updatemenus
+
+fig = dict( data=traceon, layout=layout )
+iplot( fig, filename='circle-color' )
+
+#fig = go.Figure( data=traceon )
+#iplot(fig)
+
+
+# In[20]:
+
+
+staticcircles=[
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0, {coef*500}, {coef*500}, 1)',
+                        'x0': 1.5,
+                        'y0': 2.0,
+                        'x1': 3.0,
+                        'y1': 3.5,
+                        'line': {
+                            'color': f'rgba(0, {coef*500}, {coef*500}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0, {coef*500}, {coef*500}, 1)',
+                        'x0': 1,
+                        'y0': .625,
+                        'x1': 3,
+                        'y1': 2.625,
+                        'line': {
+                            'color': f'rgba(0, {coef*500}, {coef*500}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(0, {coef*500}, {coef*500}, 1)',
+                        'x0': 1.75,
+                        'y0': 0,
+                        'x1': 3.0,
+                        'y1': 1.15,
+                        'line': {
+                            'color': f'rgba(0, {coef*500}, {coef*500}, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': scale_dew['people_x'],
+                        'y0': scale_dew['people_y'],
+                        'x1': scale_dew['people_x1'],
+                        'y1': scale_dew['people_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                                        {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': scale_dew['people1_x'],
+                        'y0': scale_dew['people1_y'],
+                        'x1': scale_dew['people1_x1'],
+                        'y1': scale_dew['people1_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': scale_dew['people2_x'],
+                        'y0': scale_dew['people2_y'],
+                        'x1': scale_dew['people2_x1'],
+                        'y1': scale_dew['people2_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': scale_dew['people3_x'],
+                        'y0': scale_dew['people3_y'],
+                        'x1': scale_dew['people3_x1'],
+                        'y1': scale_dew['people3_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                    {
+                        'visible': True,
+                        'type': 'circle',
+                        'xref': 'x',
+                        'yref': 'y',
+                        'fillcolor': f'rgba(256, 256, 1)',
+                        'x0': scale_dew['people4_x'],
+                        'y0': scale_dew['people4_y'],
+                        'x1': scale_dew['people4_x1'],
+                        'y1': scale_dew['people4_y1'],
+                        'line': {
+                            'color': f'rgba(256, 256, 256, 1)',
+                        },
+                    },
+                ]
+
+
+# In[14]:
+
+
+import pandas as pd
+import random
+df = pd.read_csv('datadump.csv')
+
+
+# In[15]:
+
+
+scale_dew = df.drop('index',axis=1)
+scale_dew -= scale_dew.min() 
+scale_dew /=scale_dew.max()
+
+
+# In[17]:
+
+
+scale_dew['people_x']= np.random.uniform(1, 3, df.shape[0])
+scale_dew['people_y']= np.random.uniform(0, 3.5, df.shape[0])
+scale_dew['people_x1']= scale_dew['people_x']+0.1
+scale_dew['people_y1']= scale_dew['people_y']+0.1
+
+scale_dew['people_x']= np.random.uniform(1, 3, df.shape[0])
+scale_dew['people_y']= np.random.uniform(0, 3.5, df.shape[0])
+scale_dew['people_x1']= scale_dew['people_x']+0.1
+scale_dew['people_y1']= scale_dew['people_y']+0.1
+
+
+scale_dew['people1_x']= np.random.uniform(1, 3, df.shape[0])
+scale_dew['people1_y']= np.random.uniform(0, 3.5, df.shape[0])
+scale_dew['people1_x1']= scale_dew['people_x']+0.1
+scale_dew['people1_y1']= scale_dew['people_y']+0.1
+
+
+scale_dew['people1_x']= np.random.uniform(1, 3, df.shape[0])
+scale_dew['people1_y']= np.random.uniform(0, 3.5, df.shape[0])
+scale_dew['people1_x1']= scale_dew['people1_x']+0.1
+scale_dew['people1_y1']= scale_dew['people1_y']+0.1
+
+
+scale_dew['people2_x']= np.random.uniform(1, 3, df.shape[0])
+scale_dew['people2_y']= np.random.uniform(0, 3.5, df.shape[0])
+scale_dew['people2_x1']= scale_dew['people2_x']+0.1
+scale_dew['people2_y1']= scale_dew['people2_y']+0.1
+
+
+scale_dew['people3_x']= np.random.uniform(1, 3, df.shape[0])
+scale_dew['people3_y']= np.random.uniform(0, 3.5, df.shape[0])
+scale_dew['people3_x1']= scale_dew['people3_x']+0.1
+scale_dew['people3_y1']= scale_dew['people3_y']+0.1
+
+
+scale_dew['people4_x']= np.random.uniform(1, 3, df.shape[0])
+scale_dew['people4_y']= np.random.uniform(0, 3.5, df.shape[0])
+scale_dew['people4_x1']= scale_dew['people4_x']+0.1
+scale_dew['people4_y1']= scale_dew['people4_y']+0.1
+
+
+
+scale_dew['people_heart']= np.random.randint(70, 90, df.shape[0])
+# scale_dew['people_x'][27530:]=0 
+# scale_dew['people_y'][27530:]=0
+# scale_dew['people_heart'][27530:]=0
+
+
+# In[314]:
+
+
+coef=65.39759826660156
+circles = [
+    [{
+            'visible': False,
+            'type': 'circle',
+            'xref': 'x',
+            'yref': 'y',
+            'fillcolor': f'rgba({(i.dew_1/coef) * 256}, 171, 96, 0.7)',
+            'x0': 1,
+            'y0': 1.125,
+            'x1': 3,
+            'y1': 3.125,
+            'line': {
+                'color': f'rgba({(i.dew_1/coef) * 256}, 171, 96, 1)',
+            },
+        },
+        {
+            'type': 'circle',
+            'xref': 'x',
+            'yref': 'y',
+            'fillcolor': f'rgba({(i.dew_2/coef) * 256}, 171, 96, 0.7)',
+            'x0': 1.5,
+            'y0': 2.5,
+            'x1': 3.0,
+            'y1': 4.0,
+            'line': {
+                'color': f'rgba({(i.dew_2/coef) * 256}, 171, 96, 1)',
+            },
+        },
+        {
+            'type': 'circle',
+            'xref': 'x',
+            'yref': 'y',
+            'fillcolor': f'rgba({(i.dew_3/coef) * 256}, 171, 96, 0.7)',
+            'x0': 1.75,
+            'y0': 0.5,
+            'x1': 3,
+            'y1': 1.75,
+            'line': {
+                'color': f'rgba({(i.dew_3/coef) * 256}, 171, 96, 1)',
+            },
+        }
+    ] for ndx, i in df[27500:28000].iterrows()]
+
+
+# In[5]:
+
+
+[
+        {
+            'type': 'circle',
+            'xref': 'x',
+            'yref': 'y',
+            'fillcolor': 'rgba(50, 171, 96, 0.7)',
+            'x0': 1,
+            'y0': 1.125,
+            'x1': 3,
+            'y1': 3.125,
+            'line': {
+                'color': 'rgba(50, 171, 96, 1)',
+            },
+        },
+        {
+            'type': 'circle',
+            'xref': 'x',
+            'yref': 'y',
+            'fillcolor': 'rgba(50, 171, 96, 0.7)',
+            'x0': 1.5,
+            'y0': 2.5,
+            'x1': 3.0,
+            'y1': 4.0,
+            'line': {
+                'color': 'rgba(50, 171, 96, 1)',
+            },
+        },
+        {
+            'type': 'circle',
+            'xref': 'x',
+            'yref': 'y',
+            'fillcolor': 'rgba(50, 171, 96, 0.7)',
+            'x0': 1.75,
+            'y0': 0.5,
+            'x1': 3,
+            'y1': 1.75,
+            'line': {
+                'color': 'rgba(50, 171, 96, 1)',
+            },
+        }
+    ]
+
+
+# In[6]:
+
+
+coef=.3
+button_layer_1_height = 1.12
+button_layer_2_height = 1.065
+
+updatemenus=list([
+    dict(
+        buttons=list([
+            dict(
+                label='Dew Levels',
+                method='relayout',
+                args=['sliders', sliders1]),
+            dict(
+                label='CO 2',
+                method='relayout',
+                args=['sliders', sliders2]),
+            dict(
+                label='Rel Humidity',
+                method='relayout',
+                args=['sliders', sliders3]),
+            dict(
+                label='Rel Temperature',
+                method='relayout',
+                args=['sliders', sliders4]),
+        ]),
+        direction = 'left',
+        pad = {'r': 10, 't': 10},
+        showactive = True,
+        type = 'buttons',
+        x = 0.1,
+        xanchor = 'left',
+        y = button_layer_1_height,
+        yanchor = 'top'            
+    )
+])
+
